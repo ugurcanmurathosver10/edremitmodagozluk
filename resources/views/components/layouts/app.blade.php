@@ -24,7 +24,7 @@
         {{ $slot }}
     </main>
 
-    {{-- <x-partials.footer /> --}}
+    <x-partials.footer />
 
 </body>
 </html>

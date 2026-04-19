@@ -4,6 +4,10 @@
 
     <x-home.hero />
 
+    <x-home.brands />
+
+    <x-home.category-banners />
+
     <section id="urunler" class="py-16 md:py-24 bg-gray-50">
         <div class="container mx-auto px-4 lg:px-8">
 
@@ -12,36 +16,13 @@
                 <div class="w-24 h-1 bg-accent mx-auto rounded-full"></div>
             </div>
 
+            <x-home.category-filter />
+
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
-                <x-product-card
-                    title="Ray-Ban Aviator Classic"
-                    oldPrice="4.500"
-                    newPrice="3.250"
-                    image="https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=800&auto=format&fit=crop"
-                    badge="Haftanın Fırsatı"
-                />
-
-                <x-product-card
-                    title="Vogue Eyewear Kadın"
-                    newPrice="2.100"
-                    image="https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=800&auto=format&fit=crop"
-                />
-
-                <x-product-card
-                    title="Oakley Spor Serisi"
-                    oldPrice="5.200"
-                    newPrice="4.800"
-                    image="https://images.unsplash.com/photo-1589831377283-33cb1cc6bd5d?q=80&w=800&auto=format&fit=crop"
-                    badge="Yeni Sezon"
-                />
-
-                <x-product-card
-                    title="Prada Symbole"
-                    newPrice="8.500"
-                    image="https://images.unsplash.com/photo-1625591340203-2e21251e6008?q=80&w=800&auto=format&fit=crop"
-                />
-
+                <x-product-card title="Ray-Ban Aviator Classic" oldPrice="4.500" newPrice="3.250" image="https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=800&auto=format&fit=crop" badge="Haftanın Fırsatı" />
+                <x-product-card title="Vogue Eyewear Kadın" newPrice="2.100" image="https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=800&auto=format&fit=crop" />
+                <x-product-card title="Oakley Spor Serisi" oldPrice="5.200" newPrice="4.800" image="https://images.unsplash.com/photo-1589831377283-33cb1cc6bd5d?q=80&w=800&auto=format&fit=crop" badge="Yeni Sezon" />
+                <x-product-card title="Prada Symbole" newPrice="8.500" image="https://images.unsplash.com/photo-1625591340203-2e21251e6008?q=80&w=800&auto=format&fit=crop" />
             </div>
 
             <div class="mt-16 text-center">
@@ -53,5 +34,4 @@
 
         </div>
     </section>
-
 </x-layouts.app>
