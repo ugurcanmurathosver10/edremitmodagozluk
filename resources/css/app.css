@@ -3,3 +3,24 @@
 @tailwind utilities;
 
 /* İleride yazacağımız özel scrollbar veya animasyon CSS'leri buraya gelecek */
+
+/* Markalar Slider Animasyonu (Garantili Çalışan Yöntem) */
+@keyframes kayanYazi {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.kayan-slider-kutusu {
+    display: flex;
+    width: max-content;
+    animation: kayanYazi 25s linear infinite;
+}
+
+/* Üzerine gelince dursun istersen (Kullanıcı deneyimi için iyidir) */
+.kayan-slider-kutusu:hover {
+    animation-play-state: paused;
+}
+
+/* Scrollbar Gizleme */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
