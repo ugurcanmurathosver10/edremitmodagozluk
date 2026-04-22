@@ -29,7 +29,7 @@
         {{ $slot }}
     </main>
 
-    <x-partials.footer />
+<x-partials.whatsapp-button />
 
 </body>
 </html>
