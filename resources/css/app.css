@@ -13,7 +13,7 @@
 .kayan-slider-kutusu {
     display: flex;
     width: max-content;
-    animation: kayanYazi 25s linear infinite;
+    animation: kayanYazi 10s linear infinite;
 }
 
 /* Üzerine gelince dursun istersen (Kullanıcı deneyimi için iyidir) */

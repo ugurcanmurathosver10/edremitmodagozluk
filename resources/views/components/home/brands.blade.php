@@ -10,7 +10,6 @@
             display: flex;
             width: max-content;
         }
-        /* Üzerine gelince yavaşlasın/dursun istersen */
         .animate-marquee:hover {
             animation-play-state: paused;
         }
@@ -21,26 +20,30 @@
 
     <div class="animate-marquee group">
 
+        {{-- 1. SET: Admin Panelden Gelen Gerçek Logolar --}}
         <div class="flex items-center justify-center space-x-12 md:space-x-24 px-6 md:px-12">
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-bold text-xl md:text-2xl tracking-tight">Ray-Ban</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-black text-lg md:text-xl tracking-[0.2em] uppercase">OAKLEY</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-serif text-xl md:text-2xl tracking-widest uppercase">PRADA</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-serif italic text-2xl md:text-3xl tracking-wide">Vogue</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-sans font-bold text-lg md:text-xl tracking-[0.2em] uppercase">GUCCI</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-sans font-medium text-lg md:text-xl tracking-[0.25em] uppercase">TOM FORD</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-serif text-xl md:text-2xl tracking-widest uppercase">DIOR</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-serif text-lg md:text-xl tracking-widest uppercase">VERSACE</span>
+            @forelse($brands as $brand)
+                <div class="flex items-center justify-center h-8 md:h-10 w-auto">
+                    <img src="{{ asset('storage/' . $brand->logo) }}"
+                         alt="{{ $brand->name }}"
+                         class="h-full w-auto object-contain filter grayscale invert opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-500"
+                         loading="lazy">
+                </div>
+            @empty
+                {{-- Eğer panelde hiç marka yoksa boş görünmesin diye şık bir yazı --}}
+                <span class="text-gray-700 text-xs uppercase tracking-[0.3em]">Edremit Moda Koleksiyonu</span>
+            @endforelse
         </div>
 
+        {{-- 2. SET: Sonsuz Döngü İçin Kopya (Kral, burası akışın bozulmaması için şart) --}}
         <div class="flex items-center justify-center space-x-12 md:space-x-24 px-6 md:px-12">
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-bold text-xl md:text-2xl tracking-tight">Ray-Ban</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-black text-lg md:text-xl tracking-[0.2em] uppercase">OAKLEY</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-serif text-xl md:text-2xl tracking-widest uppercase">PRADA</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-serif italic text-2xl md:text-3xl tracking-wide">Vogue</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-sans font-bold text-lg md:text-xl tracking-[0.2em] uppercase">GUCCI</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-sans font-medium text-lg md:text-xl tracking-[0.25em] uppercase">TOM FORD</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-serif text-xl md:text-2xl tracking-widest uppercase">DIOR</span>
-            <span class="text-gray-500/80 hover:text-white transition-colors duration-300 font-serif text-lg md:text-xl tracking-widest uppercase">VERSACE</span>
+            @foreach($brands as $brand)
+                <div class="flex items-center justify-center h-8 md:h-10 w-auto">
+                    <img src="{{ asset('storage/' . $brand->logo) }}"
+                         alt="{{ $brand->name }}"
+                         class="h-full w-auto object-contain filter grayscale invert opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+                </div>
+            @endforeach
         </div>
 
     </div>

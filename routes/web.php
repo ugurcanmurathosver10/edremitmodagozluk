@@ -1,73 +1,80 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
+use App\Models\Brand;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Setting;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routes - Edremit Moda Luxury Edition
 |--------------------------------------------------------------------------
 */
 
-// 1. Anasayfa (Artık pages klasörü içinde)
+// 1. Anasayfa (Dinamik Vitrin)
 Route::get('/', function () {
-    return view('pages.home');
+    return view('pages.home', [
+        // Slider için aktif markalar
+        'brands' => Brand::where('is_active', true)->orderBy('sort_order', 'asc')->get(),
+
+        // Vitrin için panelde "Öne Çıkar" işaretlenen son 8 ürün
+        'featuredProducts' => Product::with(['brand', 'category'])
+            ->where('is_active', true)
+            ->where('is_featured', true)
+            ->latest()
+            ->take(8)
+            ->get(),
+
+        // Genel ayarlar (WhatsApp vb. için)
+        'settings' => Setting::pluck('value', 'key')->toArray()
+    ]);
 })->name('home');
 
-// 2. Hakkımızda (Manifesto)
-Route::get('/hakkimizda', function () {
-    return view('pages.about');
-})->name('about');
+// 2. Koleksiyon (Tam Filtreleme)
+Route::get('/koleksiyon', function () {
+    $brands = Brand::where('is_active', true)->get();
+    $categories = Category::all();
+    $products = Product::with(['brand', 'category'])->where('is_active', true)->latest()->get();
 
-// 3. VIP Deneyim
-Route::get('/vip-deneyim', function () {
-    return view('pages.vip');
-})->name('vip');
+    return view('pages.collection', compact('brands', 'categories', 'products'));
+})->name('collection');
 
-// 4. İletişim
+// 3. Ürün Detay (Slug ile Gerçek Veri)
+Route::get('/urun/{slug}', function ($slug) {
+    $product = Product::with(['brand', 'category'])
+        ->where('slug', $slug)
+        ->where('is_active', true)
+        ->firstOrFail();
+
+    $settings = Setting::pluck('value', 'key')->toArray();
+
+    return view('products.show', compact('product', 'settings'));
+})->name('product.show');
+
+// 4. İletişim (Ayarlar Panelinden Gelen Veriler)
 Route::get('/iletisim', function () {
-    $settings = [
+    $settings = Setting::pluck('value', 'key')->toArray();
+
+    // Eğer veritabanı boşsa hata vermemesi için fallback (yedek) değerler
+    $defaultSettings = [
         'whatsapp' => '905448995965',
         'email' => 'info@edremitmoda.com',
         'address' => 'Edremit, Balıkesir',
         'instagram' => 'edremitmoda'
     ];
+
+    $settings = array_merge($defaultSettings, $settings);
+
     return view('pages.contact', compact('settings'));
 })->name('contact');
 
-// 5. Ürün Detay
-Route::get('/urun/{slug}', function ($slug) {
-    $product = [
-        'name' => 'Ray-Ban Aviator Classic',
-        'brand' => 'RAY-BAN',
-        'old_price' => '4.500',
-        'new_price' => '3.250',
-        'description' => 'Efsanevi damla modeli ile zamansız bir tarz. %100 UV korumalı polarize camlar ve ultra hafif metal çerçeve ile gün boyu konfor.',
-        'images' => [
-            'https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=1000',
-            'https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=1000'
-        ],
-        'badge' => 'Haftanın Fırsatı'
-    ];
+// 5. Statik Sayfalar
+Route::get('/hakkimizda', fn() => view('pages.about'))->name('about');
+Route::get('/vip-deneyim', fn() => view('pages.vip'))->name('vip');
 
-    $settings = ['whatsapp' => '905448995965'];
-
-    return view('products.show', compact('product', 'settings'));
-})->name('product.show');
-
-
-Route::get('/koleksiyon', function () {
-    return view('pages.collection');
-})->name('collection');
-
-// Yasal Metin Rotaları
-Route::get('/kvkk-ve-cerez-politikasi', function () {
-    return view('pages.legal.kvkk');
-})->name('legal.kvkk');
-
-Route::get('/mesafeli-satis-sozlesmesi', function () {
-    return view('pages.legal.sales-agreement');
-})->name('legal.sales');
-
-Route::get('/iptal-ve-iade-kosullari', function () {
-    return view('pages.legal.return-policy');
-})->name('legal.return');
+// 6. Yasal Rotalar
+Route::get('/kvkk-ve-cerez-politikasi', fn() => view('pages.legal.kvkk'))->name('legal.kvkk');
+Route::get('/mesafeli-satis-sozlesmesi', fn() => view('pages.legal.sales-agreement'))->name('legal.sales');
+Route::get('/iptal-ve-iade-kosullari', fn() => view('pages.legal.return-policy'))->name('legal.return');

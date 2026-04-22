@@ -10,7 +10,7 @@
         <p class="text-[10px] font-black uppercase tracking-widest text-gray-900">VIP Stil Danışmanı</p>
     </div>
 
-    <a href="https://wa.me/{{ $settings['whatsapp'] ?? '905448995965' }}?text={{ urlencode('Merhaba, Edremit Moda koleksiyonunuz hakkında bilgi almak ve VIP stil danışmanlığı randevusu oluşturmak istiyorum.') }}"
+    <a href="https://wa.me/{{ $siteSettings['whatsapp'] ?? '905448995965' }}?text={{ urlencode('Merhaba, Edremit Moda koleksiyonunuz hakkında bilgi almak ve VIP stil danışmanlığı randevusu oluşturmak istiyorum.') }}"
        target="_blank"
        class="relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-[#25D366] text-white rounded-full shadow-[0_10px_30px_rgba(37,211,102,0.4)] pointer-events-auto group transition-all duration-500 hover:scale-110 active:scale-95">
 

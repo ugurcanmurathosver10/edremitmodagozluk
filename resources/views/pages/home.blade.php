@@ -6,7 +6,7 @@
         <x-home.hero />
 
         <div class="-mt-12 relative z-20">
-            <x-home.brands />
+            <x-home.brands :brands="$brands" />
         </div>
 
         <div class="pt-8 pb-4">
@@ -18,7 +18,7 @@
         </div>
 
         <div id="urunler" class="scroll-mt-24 pt-8">
-            <x-home.featured-products />
+            <x-home.featured-products :products="$featuredProducts" />
         </div>
 
         <div class="mt-8">
